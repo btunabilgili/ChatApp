@@ -1,7 +1,6 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
-import { update } from './update'
 
 // The built directory structure
 //
@@ -52,6 +51,7 @@ async function createWindow() {
       // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
       contextIsolation: false,
+      webSecurity: false
     },
   })
 
@@ -73,9 +73,6 @@ async function createWindow() {
     if (url.startsWith('https:')) shell.openExternal(url)
     return { action: 'deny' }
   })
-
-  // Apply electron-updater
-  update(win)
 }
 
 app.whenReady().then(createWindow)
